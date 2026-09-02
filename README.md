@@ -15,15 +15,20 @@ Kullanıcı arayüzünde (UI), modern web standartlarına uygun ve mobil uyumlu 
   <img src="https://github.com/user-attachments/assets/9a47e84c-0cbf-451d-8464-bf74f2159d49" width="48%">
   <br><br>
   <img src="https://github.com/user-attachments/assets/d761eca9-1351-46bf-9f2f-a5f08b4d6113" width="48%">
+  
+  <br><br>
   <img src="https://github.com/user-attachments/assets/529322e7-09bd-483f-a4f9-0af75debea30" width="48%">
-  <br><br>
   <img src="https://github.com/user-attachments/assets/849a834a-1c8b-4dbb-a8df-67b086af7742" width="48%">
+  
+  <br><br>
   <img src="https://github.com/user-attachments/assets/c62a55f0-72b8-410a-801d-55bd80c5d6c1" width="48%">
-  <br><br>
   <img src="https://github.com/user-attachments/assets/143a07c2-5376-4307-aaec-299317c8036c" width="48%">
-  <img src="https://github.com/user-attachments/assets/c20b0745-06a4-4dc0-b0f9-269346302959" width="48%">
+  
   <br><br>
+  <img src="https://github.com/user-attachments/assets/c20b0745-06a4-4dc0-b0f9-269346302959" width="48%">
   <img src="https://github.com/user-attachments/assets/5269a97e-3939-4a93-8b1a-fbaa64687dae" width="48%">
+  
+  <br><br>
   <img src="https://github.com/user-attachments/assets/00533fb4-c58c-4ba1-96c2-012a6f4a2ab0" width="48%">
 </div>
 
