@@ -1,0 +1,125 @@
+﻿@model RentalyBooking.EntityLayer.Entities.Car
+
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Araç Detayları</h5>
+                <div class="d-flex gap-2">
+                    <a href="/Admin/Car/UpdateCar/@Model.CarId" class="btn btn-warning">
+                        <i class="bx bx-edit-alt me-1"></i> Düzenle
+                    </a>
+                    <a href="/Admin/Car/CarList" class="btn btn-outline-secondary">
+                        <i class="bx bx-arrow-back me-1"></i> Listeye Dön
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5 mb-4 mb-md-0 text-center">
+                        <div class="position-relative d-inline-block w-100">
+                            <img src="@Model.ImageUrl"
+                                 alt="@Model.PlateNumber"
+                                 class="img-fluid rounded"
+                                 style="max-height: 400px; object-fit: cover; width: 100%; box-shadow: 0 .25rem 1rem rgba(161,172,184,.45);"
+                                 onerror="this.src='https://placehold.co/800x500/e2e8f0/94a3b8?text=Görsel+Bulunamadı'">
+
+                            <div class="position-absolute" style="top: 15px; right: 15px;">
+                                @if (Model.IsAvailable)
+                                {
+                                    <span class="badge bg-success fs-6"><i class="bx bx-check-circle me-1"></i> Müsait</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger fs-6"><i class="bx bx-x-circle me-1"></i> Kirada</span>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <h3 class="text-primary fw-bold mb-1">
+                                @(Model.Brand != null ? Model.Brand.BrandName : "") @(Model.CarModel != null ? Model.CarModel.ModelName : "")
+                            </h3>
+                            <h5 class="text-muted">@Model.PlateNumber</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7 ps-md-4">
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <h6 class="text-uppercase text-muted fw-bold border-bottom pb-2 mb-3">Kimlik Bilgileri</h6>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <span class="d-block text-muted mb-1"><i class="bx bx-barcode text-primary me-1"></i> Şasi No (VIN)</span>
+                                <span class="fw-semibold fs-6">@Model.VIN</span>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <span class="d-block text-muted mb-1"><i class="bx bx-category text-primary me-1"></i> Kategori</span>
+                                <span class="fw-semibold fs-6">@(Model.Category != null ? Model.Category.CategoryName : "-")</span>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <span class="d-block text-muted mb-1"><i class="bx bx-building-house text-primary me-1"></i> Bulunduğu Şube</span>
+                                <span class="fw-semibold fs-6">@(Model.Branch != null ? Model.Branch.BranchName : "-")</span>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <span class="d-block text-muted mb-1"><i class="bx bx-power-off text-primary me-1"></i> Sistem Durumu</span>
+                                @if (Model.IsActive)
+                                {
+                                    <span class="badge bg-label-success">Aktif</span>
+                                }
+                                else
+                                {
+
+                                    <span class="badge bg-label-danger">Pasif</span>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <h6 class="text-uppercase text-muted fw-bold border-bottom pb-2 mb-3">Teknik Özellikler</h6>
+                            </div>
+                            <div class="col-sm-4 mb-3">
+                                <span class="d-block text-muted mb-1"><i class="bx bx-calendar text-info me-1"></i> Yıl</span>
+                                <span class="fw-semibold fs-6">@Model.Year</span>
+                            </div>
+                            <div class="col-sm-4 mb-3">
+                                <span class="d-block text-muted mb-1"><i class="bx bx-tachometer text-info me-1"></i> Kilometre</span>
+                                <span class="fw-semibold fs-6">@Model.Kilometer.ToString("N0") km</span>
+                            </div>
+                            <div class="col-sm-4 mb-3">
+                                <span class="d-block text-muted mb-1"><i class="bx bx-gas-pump text-info me-1"></i> Yakıt Türü</span>
+                                <span class="fw-semibold fs-6">@Model.FuelType</span>
+                            </div>
+                            <div class="col-sm-4 mb-3">
+                                <span class="d-block text-muted mb-1"><i class="bx bx-group text-info me-1"></i> Koltuk</span>
+                                <span class="fw-semibold fs-6">@Model.SeatCount Kişi</span>
+                            </div>
+                            <div class="col-sm-4 mb-3">
+                                <span class="d-block text-muted mb-1"><i class="bx bx-briefcase text-info me-1"></i> Bagaj</span>
+                                <span class="fw-semibold fs-6">@Model.LuggageCount Kapasite</span>
+                            </div>
+                        </div>
+
+                        <div class="row bg-light rounded p-3 mt-4">
+                            <div class="col-12">
+                                <h6 class="text-uppercase text-muted fw-bold mb-3">Fiyatlandırma Bilgisi</h6>
+                            </div>
+                            <div class="col-6">
+                                <span class="d-block text-muted mb-1">Günlük Kira Ücreti</span>
+                                <h4 class="text-success fw-bold mb-0">₺@Model.DailyPrice.ToString("N2")</h4>
+                            </div>
+                            <div class="col-6 border-start">
+                                <span class="d-block text-muted mb-1 ps-3">Gereken Depozito</span>
+                                <h4 class="text-warning fw-bold mb-0 ps-3">₺@Model.DepositAmount.ToString("N2")</h4>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

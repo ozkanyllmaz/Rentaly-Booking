@@ -1,0 +1,25 @@
+﻿@using RentalyBooking.EntityLayer.Entities
+@model List<GeneralFeature>
+
+
+
+<section class="text-light jarallax" aria-label="section">
+    <img src="~/rentaly-ui/Rentaly HTML/images/background/3.jpg" alt="" class="jarallax-img">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <h1>Maceranı Hemen Başlat</h1>
+                <div class="spacer-20"></div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3">
+                    <i class="@item.Icon"></i>
+                    <h4>@item.Title</h4>
+                    <p>@item.Description</p>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>

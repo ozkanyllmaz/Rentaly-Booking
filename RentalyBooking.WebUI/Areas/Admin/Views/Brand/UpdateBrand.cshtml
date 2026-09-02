@@ -1,0 +1,38 @@
+﻿@model RentalyBooking.EntityLayer.Entities.Brand
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-8">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Marka Güncelle</h5>
+            </div>
+            <div class="card-body">
+                <form asp-area="Admin" asp-controller="Brand" asp-action="UpdateBrand" method="post">
+
+                    <input type="hidden" asp-for="BrandId" />
+
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="BrandName">Marka Adı</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text"><i class="bx bx-edit"></i></span>
+                            <input type="text" class="form-control" asp-for="BrandName" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="ImageUrl">Marka Görsel URL (Logo)</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text"><i class="bx bx-image"></i></span>
+                            <input type="text" class="form-control" asp-for="ImageUrl" required />
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-info"><i class="bx bx-sync me-1"></i> Değişiklikleri Kaydet</button>
+                        <a asp-area="Admin" asp-controller="Brand" asp-action="BrandList" class="btn btn-outline-secondary">İptal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

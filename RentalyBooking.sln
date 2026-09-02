@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalyBooking.EntityLayer", "RentalyBooking.EntityLayer\RentalyBooking.EntityLayer.csproj", "{EF0ED633-1348-4622-B0A3-61CD0CBF65C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalyBooking.DataAccessLayer", "RentalyBooking.DataAccessLayer\RentalyBooking.DataAccessLayer.csproj", "{F09D46F2-E357-4265-B655-60BDC1465B8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalyBooking.DtoLayer", "RentalyBooking.DtoLayer\RentalyBooking.DtoLayer.csproj", "{3A7C6D86-E8B3-4E51-BEC2-F2967B6FF872}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalyBooking.BusinessLayer", "RentalyBooking.BusinessLayer\RentalyBooking.BusinessLayer.csproj", "{23C1E693-4B9E-4CB5-9284-F266BEE7A7FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalyBooking.WebUI", "RentalyBooking.WebUI\RentalyBooking.WebUI.csproj", "{2AD2A245-43E8-45B4-AED4-43320A587246}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF0ED633-1348-4622-B0A3-61CD0CBF65C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF0ED633-1348-4622-B0A3-61CD0CBF65C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF0ED633-1348-4622-B0A3-61CD0CBF65C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF0ED633-1348-4622-B0A3-61CD0CBF65C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F09D46F2-E357-4265-B655-60BDC1465B8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F09D46F2-E357-4265-B655-60BDC1465B8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F09D46F2-E357-4265-B655-60BDC1465B8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F09D46F2-E357-4265-B655-60BDC1465B8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A7C6D86-E8B3-4E51-BEC2-F2967B6FF872}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A7C6D86-E8B3-4E51-BEC2-F2967B6FF872}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A7C6D86-E8B3-4E51-BEC2-F2967B6FF872}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A7C6D86-E8B3-4E51-BEC2-F2967B6FF872}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23C1E693-4B9E-4CB5-9284-F266BEE7A7FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23C1E693-4B9E-4CB5-9284-F266BEE7A7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23C1E693-4B9E-4CB5-9284-F266BEE7A7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23C1E693-4B9E-4CB5-9284-F266BEE7A7FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AD2A245-43E8-45B4-AED4-43320A587246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AD2A245-43E8-45B4-AED4-43320A587246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AD2A245-43E8-45B4-AED4-43320A587246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AD2A245-43E8-45B4-AED4-43320A587246}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6CF7E6FC-5D01-4796-AB8F-C34B41F20D98}
+	EndGlobalSection
+EndGlobal

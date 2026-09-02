@@ -1,0 +1,70 @@
+﻿
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+<section id="section-hero" aria-label="section" class="jarallax">
+    <img src="~/rentaly-ui/Rentaly HTML/images/background/23.jpg" class="jarallax-img" alt="">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-12 text-light">
+                <div class="spacer-double"></div>
+                <div class="spacer-double"></div>
+                <h1 class="mb-2">Bir <span class="id-color">araç</span> mı arıyorsunuz? Doğru yerdesiniz.</h1>
+                <div class="spacer-single"></div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="spacer-single sm-hide"></div>
+                @await Component.InvokeAsync("DefaultBookingFormViewComponentPartial")
+            </div>
+
+            <div class="spacer-double"></div>
+
+            @await Component.InvokeAsync("ProcessViewComponentPartial")
+
+
+        </div>
+    </div>
+</section>
+
+<section aria-label="section" class="pt40 pb40 text-light" data-bgcolor="#111111">
+    <div class="wow fadeInRight d-flex">
+        <div class="de-marquee-list">
+            <div class="d-item">
+                <span class="d-item-txt">SUV</span><span class="d-item-display"><i class="d-item-dot"></i></span>
+                <span class="d-item-txt">Hatchback</span><span class="d-item-display"><i class="d-item-dot"></i></span>
+                <span class="d-item-txt">Crossover</span><span class="d-item-display"><i class="d-item-dot"></i></span>
+                <span class="d-item-txt">Convertible</span><span class="d-item-display"><i class="d-item-dot"></i></span>
+                <span class="d-item-txt">Sedan</span><span class="d-item-display"><i class="d-item-dot"></i></span>
+                <span class="d-item-txt">Sports Car</span><span class="d-item-display"><i class="d-item-dot"></i></span>
+            </div>
+        </div>
+        <div class="de-marquee-list">
+            <div class="d-item">
+                <span class="d-item-txt">SUV</span><span class="d-item-display"><i class="d-item-dot"></i></span>
+                <span class="d-item-txt">Hatchback</span><span class="d-item-display"><i class="d-item-dot"></i></span>
+                <span class="d-item-txt">Crossover</span><span class="d-item-display"><i class="d-item-dot"></i></span>
+                <span class="d-item-txt">Convertible</span><span class="d-item-display"><i class="d-item-dot"></i></span>
+                <span class="d-item-txt">Sedan</span><span class="d-item-display"><i class="d-item-dot"></i></span>
+                <span class="d-item-txt">Sports Car</span><span class="d-item-display"><i class="d-item-dot"></i></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Component.InvokeAsync("OurFeaturesVeiwComponentPartial")
+
+@await Component.InvokeAsync("AnalyticViewComponentPartial")
+
+@await Component.InvokeAsync("CarListTopTenViewComponentPartial")
+
+@await Component.InvokeAsync("GeneralFeaturesViewComponentPartial")
+
+@await Component.InvokeAsync("TestimonialViewComponentPartial");
+
+@await Component.InvokeAsync("FAQViewComponentPartial");
+

@@ -1,0 +1,403 @@
+﻿@using RentalyBooking.WebUI.Models
+@model BookingViewModel
+
+@{
+    ViewData["Title"] = "Rezervasyon";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="no-bottom no-top" id="content">
+    <div id="top"></div>
+
+    <!-- section begin -->
+    <section id="subheader" class="jarallax text-light">
+        <img src="~/rentaly-ui/Rentaly HTML/images/background/subheader.jpg" class="jarallax-img" alt="">
+        <div class="center-y relative text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h1>Hızlı Rezervasyon</h1>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- section close -->
+
+    <section id="section-hero" aria-label="section" class="no-top" data-bgcolor="#121212">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="col-lg-12 mt-80 sm-mt-0">
+                    <div class="spacer-single sm-hide"></div>
+                    <div id="booking_form_wrap" class="padding40 rounded-5 shadow-soft" data-bgcolor="#ffffff">
+
+                        <form action="/Booking/Index" method="post" id="my_booking_form" class="form-s2 row g-4">
+                            @Html.AntiForgeryToken()
+
+                            <!-- SOL KOLON: Araç ve Kiralama Bilgileri -->
+                            <div class="col-lg-6 d-light">
+                                <h4>Araç Rezervasyonu</h4>
+
+                                <!-- Tüm elemanları row g-4 içine alarak boşlukları standartlaştırdık -->
+                                <div class="row g-4">
+                                    <div class="col-lg-12">
+                                        @if (Model.CarId > 0)
+                                        {
+                                            var selectedCarInfo = Model.Cars?.FirstOrDefault(x => x.CarId == Model.CarId);
+
+                                            <input type="hidden" asp-for="CarId" />
+                                            <input type="text" class="form-control"
+                                                   value="@(selectedCarInfo != null ? $"{selectedCarInfo.Brand.BrandName} {selectedCarInfo.CarModel.ModelName}" : "Seçilen Araç")"
+                                                   readonly style="background-color: #e9ecef; cursor: not-allowed;" />
+                                        }
+                                        else
+                                        {
+                                            <select asp-for="CarId" asp-items="@(new SelectList(Model.Cars, "CarId", "CarFullName"))" class="form-control">
+                                                <option value="">Araç Seçiniz</option>
+                                            </select>
+                                        }
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <h5>Alış Şubesi</h5>
+                                        @if (Model.PickupBranchId > 0)
+                                        {
+                                            var selectedBranch = Model.Branches?.FirstOrDefault(x => x.BranchId == Model.PickupBranchId);
+
+                                            <input type="hidden" asp-for="PickupBranchId" />
+                                            <input type="text" class="form-control"
+                                                   value="@(selectedBranch != null ? selectedBranch.BranchName : "Seçilen Şube")"
+                                                   readonly style="background-color: #e9ecef; cursor: not-allowed;" />
+                                        }
+                                        else
+                                        {
+                                            <select asp-for="PickupBranchId" asp-items="@(new SelectList(Model.Branches, "BranchId", "BranchName"))" id="pickup_location" class="form-control">
+                                                <option value="">Şube Seçiniz</option>
+                                            </select>
+                                        }
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <h5>Teslim Şubesi</h5>
+                                        <select asp-for="ReturnBranchId" asp-items="@(new SelectList(Model.Branches, "BranchId", "BranchName"))" id="destination" class="form-control">
+                                            <option value="">Şube Seçiniz</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <h5>Alış Tarihi ve Saati</h5>
+                                        <div class="date-time-field">
+                                            <input asp-for="PickupDate" type="text" id="date-picker" class="form-control">
+                                            <select asp-for="PickupTime" id="pickup_time">
+                                                @for (var h = 0; h < 24; h++)
+                                                {
+                                                    var hh = h.ToString("D2");
+                                                    <option value="@hh:00">@hh:00</option>
+                                                    <option value="@hh:30">@hh:30</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <h5>Teslim Tarihi ve Saati</h5>
+                                        <div class="date-time-field">
+                                            <input asp-for="ReturnDate" type="text" id="date-picker-2" class="form-control">
+                                            <select asp-for="ReturnTime" id="return_time">
+                                                @for (var h = 0; h < 24; h++)
+                                                {
+                                                    var hh = h.ToString("D2");
+                                                    <option value="@hh:00">@hh:00</option>
+                                                    <option value="@hh:30">@hh:30</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- REZERVASYON CANLI ÖZET KARTI -->
+                                    @{
+                                        // URL'den gelen CarId ile Model içindeki aracı eşleştirip bilgilerini alıyoruz
+                                        var selectedCar = Model.Cars?.FirstOrDefault(x => x.CarId == Model.CarId);
+                                    }
+
+                                    <div class="col-lg-12 mt-3">
+                                        <div class="p-4 rounded-4 shadow-sm" style="background-color: #f8f9fa; border: 1px solid #e9ecef; position: sticky; top: 20px;">
+                                            <h5 class="mb-3 text-dark border-bottom pb-2"><i class="fa fa-file-text-o text-success"></i> Rezervasyon Özeti</h5>
+
+                                            @if (selectedCar != null)
+                                            {
+                                                <div class="d-flex align-items-center mb-4">
+                                                    <!-- Araç Resmi -->
+                                                    <img src="@selectedCar.ImageUrl" alt="Car" class="img-fluid rounded-3" style="width: 140px; height: 90px; object-fit: contain; background: #fff; border: 1px solid #ddd; margin-right: 15px;">
+                                                    <div>
+                                                        <!-- Araç Marka Model ve Fiyatı -->
+                                                        <h6 class="mb-1 text-dark fw-bold" style="font-size:1.1rem;">@selectedCar.Brand.BrandName @selectedCar.CarModel.ModelName</h6>
+                                                        <span class="badge bg-success">Günlük: @selectedCar.DailyPrice ₺</span>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                            <!-- Kullanıcı yazdıkça JS ile dolacak alanlar -->
+                                            <div class="summary-details text-dark" style="font-size: 0.95rem; line-height: 1.8;">
+                                                <div class="d-flex justify-content-between border-bottom border-light pb-1 mb-1">
+                                                    <span class="text-muted"><i class="fa fa-user"></i> Sürücü:</span>
+                                                    <strong id="summary-driver" class="text-end">-</strong>
+                                                </div>
+                                                <div class="d-flex justify-content-between border-bottom border-light pb-1 mb-1">
+                                                    <span class="text-muted"><i class="fa fa-map-marker"></i> Alış Noktası:</span>
+                                                    <strong id="summary-pickup-loc" class="text-end text-primary">-</strong>
+                                                </div>
+                                                <div class="d-flex justify-content-between border-bottom border-light pb-1 mb-1">
+                                                    <span class="text-muted"><i class="fa fa-calendar"></i> Alış Zamanı:</span>
+                                                    <strong id="summary-pickup-date" class="text-end">-</strong>
+                                                </div>
+                                                <div class="d-flex justify-content-between border-bottom border-light pb-1 mb-1">
+                                                    <span class="text-muted"><i class="fa fa-flag-checkered"></i> Teslim Noktası:</span>
+                                                    <strong id="summary-return-loc" class="text-end text-danger">-</strong>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <span class="text-muted"><i class="fa fa-calendar"></i> Teslim Zamanı:</span>
+                                                    <strong id="summary-return-date" class="text-end">-</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- REZERVASYON ÖZET KARTI BİTİŞ -->
+                                </div>
+                            </div>
+
+                            <!-- SAĞ KOLON: Müşteri Bilgileri -->
+                            <div class="col-lg-6">
+                                <h4>Bilgilerinizi Girin</h4>
+                                <div class="row g-4">
+
+                                    <!-- Ad ve Soyad Yanyana -->
+                                    <div class="col-lg-6">
+                                        <div class="field-set">
+                                            <input asp-for="CustomerName" type="text" class="form-control" placeholder="Adınız" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="field-set">
+                                            <input asp-for="CustomerSurname" type="text" class="form-control" placeholder="Soyadınız" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- TC Kimlik Numarası -->
+                                    <div class="col-lg-12">
+                                        <div class="field-set">
+                                            <input asp-for="CustomerIdentityNumber" type="text" class="form-control" placeholder="TC Kimlik Numaranız" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- Ehliyet No ve Tarihi -->
+                                    <div class="col-lg-6">
+                                        <div class="field-set">
+                                            <input asp-for="DrivingLicenseNumber" type="text" class="form-control" placeholder="Ehliyet Numaranız" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="field-set">
+                                            <input asp-for="DrivingLicenseDate" type="date" class="form-control" title="Ehliyet Veriliş Tarihi" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- Email ve Telefon -->
+                                    <div class="col-lg-6">
+                                        <div class="field-set">
+                                            <input asp-for="CustomerEmail" type="email" class="form-control" placeholder="E-posta Adresiniz" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="field-set">
+                                            <input asp-for="CustomerPhone" type="text" class="form-control" placeholder="Telefon Numaranız" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- İndirim Kuponu -->
+                                    <div class="col-lg-12">
+                                        <div class="field-set mb-1">
+                                            <label class="form-label text-warning fw-bold"><i class="fa fa-tag"></i> İndirim Kuponu (Varsa)</label>
+                                            <input asp-for="CouponCode" type="text" class="form-control" style="border: 1px dashed #f1c40f; color: #f1c40f;" placeholder="Örn: RENTALY-XXXXX">
+                                            <span asp-validation-for="CouponCode" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mesaj -->
+                                    <div class="col-lg-12">
+                                        <div class="field-set">
+                                            <textarea asp-for="Message" class="form-control" placeholder="Özel bir isteğiniz var mı?"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <!-- ÇÖZÜM: Gönder Butonu form akışına uygun olarak sağ kolonun en altına alındı -->
+                                    <div class="col-lg-12 mt-2">
+                                        <input type="submit" id="send_message" value="Rezervasyonu Oluştur" class="btn-main btn-fullwidth padding10 fontsize24">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+
+                        @if (TempData["BookingSuccess"] != null)
+                        {
+                            <div id="success_message" class="success s2 mt-4">
+                                <div class="row">
+                                    <div class="col-lg-8 offset-lg-2 text-light text-center">
+                                        <h3 class="mb-2">Tebrikler! Rezervasyonunuz başarıyla alındı. En kısa sürede sizinle iletişime geçeceğiz.</h3>
+                                        Tekrar rezervasyon yapmak isterseniz bu sayfayı yenileyin.
+                                        <div class="spacer-20"></div>
+                                        <a class="btn-main btn-black" asp-controller="Booking" asp-action="Index">Sayfayı Yenile</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="spacer-double"></div>
+
+            <div class="row text-light">
+                <div class="col-lg-12">
+                    <div class="container-timeline">
+                        <ul>
+                            <li>
+                                <h4>Bir araç seçin</h4>
+                                <p>Her ihtiyaca, zevke ve varış noktasına uygun geniş araç filomuzla eşsiz maceraların ve unutulmaz yolculukların kilidini açın.</p>
+                            </li>
+                            <li>
+                                <h4>Konum ve tarih seçin</h4>
+                                <p>İdeal konumunuzu ve tarihinizi seçin; konfor, esneklik ve unutulmaz deneyimlerle dolu bir yolculuğa çıkalım.</p>
+                            </li>
+                            <li>
+                                <h4>Rezervasyon yapın</h4>
+                                <p>Rezervasyonunuzu kolayca güvence altına alın, sonsuz olasılıkların kapılarını açın ve bir sonraki maceranıza güvenle adım atın.</p>
+                            </li>
+                            <li>
+                                <h4>Arkanıza yaslanın ve rahatlayın</h4>
+                                <p>Her detayla biz ilgilenirken siz sorunsuz bir rahatlığın ve konforun tadını çıkarın.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee Slider kısımlarını aynen koruduk -->
+    <section aria-label="section" class="pt40 pb40 text-light">
+        <div class="wow fadeInRight d-flex">
+            <div class="de-marquee-list s2">
+                <div class="d-item">
+                    <span class="d-item-txt">SUV</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Hatchback</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Crossover</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Cabrio</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Sedan</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Spor Araba</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Coupe</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Minivan</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Station Wagon</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Kamyonet</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Minivanlar</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Egzotik Araçlar</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                </div>
+            </div>
+
+            <div class="de-marquee-list s2">
+                <div class="d-item">
+                    <span class="d-item-txt">SUV</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Hatchback</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Crossover</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Cabrio</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Sedan</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Spor Araba</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Coupe</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Minivan</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Station Wagon</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Kamyonet</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Minivanlar</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                    <span class="d-item-txt">Egzotik Araçlar</span>
+                    <span class="d-item-display"><i class="d-item-dot"></i></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+        // 1. İsim ve Soyisim Dinleyicisi
+        $('#CustomerName, #CustomerSurname').on('input', function() {
+            let ad = $('#CustomerName').val();
+            let soyad = $('#CustomerSurname').val();
+            let tamAd = (ad + ' ' + soyad).trim();
+
+            $('#summary-driver').text(tamAd !== '' ? tamAd.toUpperCase() : '-');
+        });
+
+        // 2. Alış ve Teslim Lokasyonları Dinleyicisi
+        $('#pickup_location').on('change', function() {
+            let text = $(this).find("option:selected").text();
+            $('#summary-pickup-loc').text(text !== "Şube Seçiniz" && text !== "" ? text : '-');
+        });
+
+        $('#destination').on('change', function() {
+            let text = $(this).find("option:selected").text();
+            $('#summary-return-loc').text(text !== "Şube Seçiniz" && text !== "" ? text : '-');
+        });
+
+        // 3. Tarih ve Saat Dinleyicileri
+        function updatePickupDate() {
+            let date = $('#date-picker').val();
+            let time = $('#pickup_time').val();
+            $('#summary-pickup-date').text(date ? (date + ' | ' + time) : '-');
+        }
+
+        function updateReturnDate() {
+            let date = $('#date-picker-2').val();
+            let time = $('#return_time').val();
+            $('#summary-return-date').text(date ? (date + ' | ' + time) : '-');
+        }
+
+        $('#date-picker, #pickup_time').on('change input blur', updatePickupDate);
+        $('#date-picker-2, #return_time').on('change input blur', updateReturnDate);
+
+        // Sayfa ilk yüklendiğinde hazır seçili alanlar varsa karta yansıt
+        $('#pickup_location').trigger('change');
+        $('#destination').trigger('change');
+        updatePickupDate();
+        updateReturnDate();
+    });
+</script>

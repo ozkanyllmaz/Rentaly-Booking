@@ -1,0 +1,19 @@
+﻿@using RentalyBooking.EntityLayer.Entities
+@model List<Process>
+
+
+<div class="row">
+    <div class="col-lg-12 text-light">
+        <div class="container-timeline">
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <h4>@item.ProcessName</h4>
+                        <p>@item.ProcessDescription</p>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

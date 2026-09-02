@@ -1,0 +1,164 @@
+﻿@using RentalyBooking.WebUI.Models
+@using RentalyBooking.EntityLayer.Entities
+@model RentalyBooking.WebUI.Models.DefaultRentalyViewModel
+
+<div class="p-4 rounded-3 shadow-soft" data-bgcolor="#ffffff">
+    <form asp-controller="Car" asp-action="List" method="get">
+        <div id="step-1" class="row">
+            <div class="col-lg-6 mb30">
+                <h5>Araç Tipi Seçiniz</h5>
+                <div style="display:flex; align-items:center; gap:8px;">
+
+                    <!-- Sol Buton -->
+                    <button type="button" onclick="scrollCategories('left')"
+                            style="flex-shrink:0; width:36px; height:36px; border:1px solid #ddd;
+                       background:white; border-radius:6px; cursor:pointer;">
+                        <i class="fa fa-chevron-left"></i>
+                    </button>
+
+                    <!-- Scroll Container -->
+                    <div id="categoriesContainer"
+                         style="display:flex; flex-wrap:nowrap; overflow-x:auto; overflow-y:hidden;
+                    gap:12px; padding:8px 4px; flex:1; min-width:0; scroll-behavior:smooth;
+                    scrollbar-width:thin; scrollbar-color:green #f1f1f1;">
+
+                        @{
+                            int count = 1;
+                            var categories = Model.Category;
+                        }
+                        @if (categories != null)
+                        {
+                            foreach (var category in categories)
+                            {
+                                <div style="flex:0 0 120px; min-width:120px;">
+                                    <input id="radio-@category.CategoryId"
+                                           name="CategoryId"
+                                           type="radio"
+                                           value="@category.CategoryId"
+                                           @(count == 1 ? "checked=\"checked\"" : "")
+                                           style="display:none;"
+                                           onchange="updateCategoryStyle(this)">
+
+                                    <label for="radio-@category.CategoryId"
+                                           class="cat-label"
+                                           style="display:flex; flex-direction:column; align-items:center;
+                                                      justify-content:center; gap:8px; padding:12px 8px;
+                                                      border:2px solid #e0e0e0; border-radius:10px;
+                                                      cursor:pointer; background:green; text-align:center;
+                                                      transition:all 0.2s ease; min-height:110px; width:100%; background: green;">
+                                        <img src="@category.IconUrl"
+                                             alt="@category.CategoryName"
+                                             style="width:50px; height:50px; object-fit:contain; background: green;">
+                                        <span style="font-size:12px; font-weight:600; color:#fff;
+                                                 line-height:1.2;">@category.CategoryName</span>
+                                    </label>
+                                </div>
+                                count++;
+                            }
+                        }
+                    </div>
+
+                    <!-- Sağ Buton -->
+                    <button type="button" onclick="scrollCategories('right')"
+                            style="flex-shrink:0; width:36px; height:36px; border:1px solid #ddd;
+                       background:white; border-radius:6px; cursor:pointer;">
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-6 mb20">
+                        <h5>Alış Lokasyonu</h5>
+                        <select name="PickupBranch" class="form-control">
+                            <option selected disabled value="">Bir Şube Seçiniz</option>
+                            @if (Model.Branches != null)
+                            {
+                                @foreach (var branch in Model.Branches)
+                                {
+                                    <option value="@branch.BranchId">@branch.BranchName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-lg-6 mb20">
+                        <h5>Dönüş Lokasyonu</h5>
+                        <select name="ReturnBranch" class="form-control">
+                            <option selected disabled value="">Bir Şube Seçiniz</option>
+                            @if (Model.Branches != null)
+                            {
+                                @foreach (var branch in Model.Branches)
+                                {
+                                    <option value="@branch.BranchId">@branch.BranchName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-lg-6 mb20">
+                        <h5>Alış Tarihi & Saati</h5>
+                        <div class="date-time-field">
+                            <!-- name="pickupDateStr" olarak güncellendi -->
+                            <input type="text" id="date-picker" name="pickupDateStr" value="">
+
+                            <!-- asp-for kaldırılıp name="pickupTimeStr" eklendi -->
+                            <select name="pickupTimeStr" id="pickup-time">
+                                <option selected disabled value="">Saat</option>
+                                <option value="08:00">08:00</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb20">
+                        <h5>Dönüş Tarihi & Saati</h5>
+                        <div class="date-time-field">
+                            <!-- name="returnDateStr" olarak güncellendi -->
+                            <input type="text" id="date-picker-2" name="returnDateStr" value="">
+
+                            <!-- asp-for kaldırılıp name="returnTimeStr" eklendi -->
+                            <select name="returnTimeStr" id="collection-time">
+                                <option selected disabled value="">Saat</option>
+                                <option value="08:00">08:00</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <button type="submit" class="btn-main pull-right">Araç Bul</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script>
+        function scrollCategories(direction) {
+        const container = document.getElementById('categoriesContainer');
+        const scrollAmount = 132; // 120px kart + 12px gap
+        container.scrollBy({
+            left: direction === 'left' ? -scrollAmount : scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+
+    // Sayfa yüklenince ilk radio'yu seç ve stilini uygula
+    document.addEventListener('DOMContentLoaded', function () {
+        const firstRadio = document.querySelector('#categoriesContainer input[type="radio"]');
+        if (firstRadio) {
+            firstRadio.checked = true;
+        }
+    });
+</script>
+

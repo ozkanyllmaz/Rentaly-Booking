@@ -1,0 +1,35 @@
+﻿@model RentalyBooking.EntityLayer.Entities.Category
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6 col-lg-5">
+        <div class="card mb-4 shadow-sm border-0">
+            <div class="card-header border-bottom">
+                <h5 class="mb-0 text-warning"><i class="bx bx-edit-alt me-2"></i>Kategori Düzenle</h5>
+            </div>
+
+            <div class="card-body mt-4">
+                <form asp-area="Admin" asp-controller="Category" asp-action="UpdateCategory" method="post">
+
+                    <input type="hidden" asp-for="CategoryId" />
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-secondary" asp-for="CategoryName">Kategori Adı</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text"><i class="bx bx-purchase-tag"></i></span>
+                            <input type="text" class="form-control form-control-lg" asp-for="CategoryName" required />
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-5">
+                        <button type="submit" class="btn btn-warning btn-lg text-white">
+                            <i class="bx bx-sync me-1"></i> Değişiklikleri Kaydet
+                        </button>
+                        <a asp-area="Admin" asp-controller="Category" asp-action="CategoryList" class="btn btn-label-secondary btn-lg">
+                            İptal Et
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+﻿@using RentalyBooking.EntityLayer.Entities
+@model List<Car>
+
+<style>
+    /* d-img sınıfının içindeki resimleri hedefliyoruz */
+    .d-img img {
+        width: 100%; /* Kutunun genişliğini tam kapla */
+        height: 260px; /* Tüm resimler için ortak ve sabit bir yükseklik belirle (kendi tasarımına göre 200-250 arası deneyebilirsin) */
+        object-fit: cover; /* Resmi sündürme, en-boy oranını koruyarak kutuyu doldur ve artanı kırp */
+    }
+</style>
+
+<section id="section-cars">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 offset-lg-3 text-center">
+                <h2>Öne Çıkan Araçlarımız</h2>
+                <p>Hayallerinizi gerçeğe dönüştüren, unutulmaz yolculuklar için seçkin araç filomuz.</p>
+                <div class="spacer-20"></div>
+            </div>
+
+            <div id="items-carousel" class="owl-carousel wow fadeIn">
+                @foreach (var item in Model)
+                {
+                    Random rnd = new Random();
+                    int sayi = rnd.Next(1, 20);
+
+                    <div class="col-lg-12">
+                        <div class="de-item mb30">
+                            <div class="d-img">
+                                <img src="@item.ImageUrl" class="img-fluid" alt="">
+                            </div>
+                            <div class="d-info">
+                                <div class="d-text">
+                                    <h4>@item.Brand.BrandName @item.CarModel.ModelName</h4>
+                                    <div class="d-item_like"><i class="fa fa-heart"></i><span>@sayi</span></div>
+                                    <div class="d-atr-group">
+                                        <span class="d-atr"><img src="~/rentaly-ui/Rentaly HTML/images/icons/1-green.svg" alt="">@item.SeatCount</span>
+                                        <span class="d-atr"><img src="~/rentaly-ui/Rentaly HTML/images/icons/2-green.svg" alt="">@item.LuggageCount</span>
+                                        <span class="d-atr"><img src="~/rentaly-ui/Rentaly HTML/images/icons/3-green.svg" alt="">@item.DoorCount</span>
+                                        <span class="d-atr"><img src="~/rentaly-ui/Rentaly HTML/images/icons/4-green.svg" alt="">SUV</span>
+                                    </div>
+                                    <div class="d-price">
+                                        Günlük <span>₺@item.DailyPrice</span> 'den başlayan fiyatlarla
+                                        <a class="btn-main" href="#">Şimdi Kirala</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

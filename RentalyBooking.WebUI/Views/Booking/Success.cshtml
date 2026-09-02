@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Rezervasyon Alındı";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="no-bottom no-top" id="content">
+    <div id="top"></div>
+
+    <!-- Üst Arka Plan (Görseldeki koyu araçlı alan) -->
+    <!-- Yüksekliği padding ile ayarlıyoruz ki beyaz kart üstüne binebilsin -->
+    <section id="subheader" class="jarallax text-light" style="padding-bottom: 180px;">
+        <img src="~/rentaly-ui/Rentaly HTML/images/background/subheader.jpg" class="jarallax-img" alt="">
+        <div class="center-y relative text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h1 style="font-weight: bold; letter-spacing: -1px;">Rezervasyon Alındı</h1>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beyaz Kart Bölümü (Eksi margin ile üstteki resmin üzerine biniyor) -->
+    <section class="no-top" style="margin-top: -120px; z-index: 99; position: relative; padding-bottom: 100px;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 col-md-9">
+                    <div class="padding40 rounded-5 shadow-soft text-center" style="background-color: #ffffff;">
+
+                        <!-- Yeşil Onay İkonu -->
+                        <div style="font-size: 80px; color: #2ecc71; margin-bottom: 10px; line-height: 1;">
+                            <i class="fa fa-check-circle"></i>
+                        </div>
+
+                        <!-- Ana Başlık -->
+                        <h3 style="color: #1a2b4c; font-weight: 800; font-size: 26px; margin-bottom: 25px;">
+                            Rezervasyonunuz Alındı!
+                        </h3>
+
+                        <!-- Rezervasyon Numarası -->
+                        <p style="color: #666; font-size: 16px; margin-bottom: 25px;">
+                            Rezervasyon numaranız: <strong style="color: #2c3e50; font-size: 17px;">@ViewBag.ReservationNo</strong>
+                        </p>
+
+                        <!-- Bilgilendirme Metni -->
+                        <p style="color: #888; font-size: 15px; line-height: 1.7; margin-bottom: 30px; max-width: 85%; margin-left: auto; margin-right: auto;">
+                            Rezervasyonunuz admin onayına gönderildi. Onaylandığında e-posta ile bilgilendirileceksiniz.
+                        </p>
+
+                        <div class="spacer-10"></div>
+
+                        <!-- İsteğe bağlı ana sayfaya dönüş butonu -->
+                        <a href="/" class="btn-main btn-black">Ana Sayfaya Dön</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

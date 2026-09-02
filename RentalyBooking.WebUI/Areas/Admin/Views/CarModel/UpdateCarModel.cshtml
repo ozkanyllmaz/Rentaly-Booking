@@ -1,0 +1,43 @@
+﻿@model RentalyBooking.EntityLayer.Entities.CarModel
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Model Bilgilerini Güncelle</h5>
+            </div>
+            <hr class="m-0" />
+
+            <div class="card-body mt-3">
+                <form asp-area="Admin" asp-controller="CarModel" asp-action="UpdateCarModel" method="post">
+
+                    <input type="hidden" asp-for="CarModelId" />
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold" asp-for="BrandId">Bağlı Olduğu Marka</label>
+                        <select class="form-select" asp-for="BrandId" asp-items="@ViewBag.Brands" required>
+                            <option value="">Seçiniz</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold" asp-for="ModelName">Model Adı</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text"><i class="bx bx-purchase-tag-alt"></i></span>
+                            <input type="text" class="form-control" asp-for="ModelName" required />
+                        </div>
+                    </div>
+
+                    <div class="mt-5 text-end">
+                        <a asp-area="Admin" asp-controller="CarModel" asp-action="CarModelList" class="btn btn-outline-secondary me-2">
+                            <i class="bx bx-arrow-back me-1"></i> İptal
+                        </a>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="bx bx-sync me-1"></i> Değişiklikleri Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

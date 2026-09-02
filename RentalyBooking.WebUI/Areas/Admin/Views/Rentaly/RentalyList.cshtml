@@ -1,0 +1,127 @@
+﻿@model List<RentalyBooking.EntityLayer.Entities.Rentaly>
+
+<div class="card mb-4 shadow-sm border-0">
+    <div class="card-header d-flex justify-content-between align-items-center bg-white border-bottom">
+        <h5 class="mb-0 fw-bold text-primary"><i class="bx bx-key me-2"></i>Kiralama (Rezervasyon) Listesi</h5>
+        <a asp-area="Admin" asp-controller="Rentaly" asp-action="CreateRentaly" class="btn btn-primary">
+            <i class="bx bx-plus me-1"></i> Yeni Kiralama Oluştur
+        </a>
+    </div>
+
+    <div class="table-responsive text-nowrap">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th class="ps-4">Müşteri</th>
+                    <th>Araç</th>
+                    <th>Alış / Dönüş Şubesi</th>
+                    <th>Tarih Aralığı</th>
+                    <th>Tutar</th>
+                    <th>Durum</th>
+                    <th class="text-end pe-4">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count == 0)
+                {
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            <i class="bx bx-calendar-x fs-1 mb-3"></i>
+                            <p class="mb-0">Sistemde henüz bir kiralama kaydı bulunmuyor.</p>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-semibold text-dark">
+                                <i class="bx bx-user text-primary me-1"></i>
+                                @(item.Customer != null ? $"{item.Customer.Name} {item.Customer.Surname}" : "Bilinmiyor")
+                            </td>
+                            <td>
+                                <span class="badge bg-label-secondary text-dark">
+                                    <i class="bx bx-car me-1"></i> @(item.Car != null ? item.Car.PlateNumber : "-")
+                                </span>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-column" style="font-size: 0.85rem;">
+                                    <span class="text-success"><i class="bx bx-up-arrow-circle"></i> @(item.PickupBranch != null ? item.PickupBranch.BranchName : "-")</span>
+                                    <span class="text-danger"><i class="bx bx-down-arrow-circle"></i> @(item.ReturnBranch != null ? item.ReturnBranch.BranchName : "-")</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-column" style="font-size: 0.85rem;">
+                                    <span class="text-muted">@item.PickupDate.ToString("dd.MM.yyyy")</span>
+                                    <span class="text-muted">@item.ReturnDate.ToString("dd.MM.yyyy")</span>
+                                </div>
+                            </td>
+                            <td><strong class="text-primary">₺@item.TotalPrice.ToString("N2")</strong></td>
+                            <td>
+                                @switch (item.Status)
+                                {
+                                    case "Onay Bekliyor":
+                                        <span class="badge bg-label-warning">Onay Bekliyor</span>
+                                        break;
+                                    case "Onaylandı":
+                                        <span class="badge bg-label-info">Onaylandı</span>
+                                        break;
+                                    case "Aktif":
+                                        <span class="badge bg-label-primary">Aktif Sürüş</span>
+                                        break;
+                                    case "Tamamlandı":
+                                        <span class="badge bg-label-success">Tamamlandı</span>
+                                        break;
+                                    case "İptal":
+                                        <span class="badge bg-label-danger">İptal Edildi</span>
+                                        break;
+                                    default:
+                                        <span class="badge bg-label-secondary">@item.Status</span>
+                                        break;
+                                }
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                        <i class="bx bx-dots-vertical-rounded fs-4 text-muted"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+
+                                        <!-- 1. Sadece "Onay Bekliyor" ise Onayla ve İptal Et çıkmalı -->
+                                        @if (item.Status == "Onay Bekliyor")
+                                        {
+                                            <a class="dropdown-item text-success" href="/Admin/Rentaly/ApproveRental/@item.RentalyId">
+                                                <i class="bx bx-check-circle me-1"></i> Onayla
+                                            </a>
+                                            <a class="dropdown-item text-danger" href="/Admin/Rentaly/RejectRental/@item.RentalyId" onclick="return confirm('Bu rezervasyonu iptal etmek istediğinize emin misiniz?');">
+                                                <i class="bx bx-x-circle me-1"></i> İptal Et
+                                            </a>
+                                        }
+
+                                        <!-- 2. "Onaylandı" veya "Aktif" ise aracı geri teslim alma butonu çıkmalı -->
+                                        @if (item.Status == "Onaylandı" || item.Status == "Aktif")
+                                        {
+                                            <a class="dropdown-item text-primary" href="/Admin/Rentaly/CompleteRental/@item.RentalyId" onclick="return confirm('Aracı teslim aldığınızı ve şubesini güncellediğinizi onaylıyor musunuz?');">
+                                                <i class="bx bx-check-double me-1"></i> Teslim Al (Süreci Bitir)
+                                            </a>
+                                        }
+
+                                        <!-- Düzenle ve Sil butonları her zaman görünebilir -->
+                                        <a class="dropdown-item text-warning" href="/Admin/Rentaly/UpdateRentaly/@item.RentalyId">
+                                            <i class="bx bx-edit-alt me-1"></i> Düzenle
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item text-secondary" href="/Admin/Rentaly/DeleteRentaly/@item.RentalyId" onclick="return confirm('Bu kaydı tamamen silmek istediğinize emin misiniz?');">
+                                            <i class="bx bx-trash me-1"></i> Sil
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

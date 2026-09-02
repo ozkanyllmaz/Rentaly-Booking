@@ -1,0 +1,73 @@
+﻿@model RentalyBooking.EntityLayer.Entities.Customer
+
+<div class="card mb-4 shadow-sm border-0">
+    <div class="card-header border-bottom">
+        <h5 class="mb-0 text-primary"><i class="bx bx-user-plus me-2"></i>Yeni Müşteri Kaydı</h5>
+    </div>
+
+    <div class="card-body mt-4">
+        <form asp-area="Admin" asp-controller="Customer" asp-action="CreateCustomer" method="post">
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h6 class="text-muted fw-bold border-bottom pb-2 mb-3">Kişisel Bilgiler</h6>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label fw-bold" asp-for="Name">Ad</label>
+                            <input type="text" class="form-control" asp-for="Name" placeholder="Örn: Ahmet" required />
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label fw-bold" asp-for="Surname">Soyad</label>
+                            <input type="text" class="form-control" asp-for="Surname" placeholder="Örn: Yılmaz" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" asp-for="IdentityNumber">T.C. Kimlik Numarası</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text"><i class="bx bx-id-card"></i></span>
+                            <input type="text" class="form-control" asp-for="IdentityNumber" maxlength="11" placeholder="11 Haneli TC Kimlik No" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="text-muted fw-bold border-bottom pb-2 mb-3">İletişim & Ehliyet Bilgileri</h6>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label fw-bold" asp-for="Phone">Telefon Numarası</label>
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text"><i class="bx bx-phone"></i></span>
+                                <input type="text" class="form-control" asp-for="Phone" placeholder="05XX..." required />
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label fw-bold" asp-for="Email">E-Posta Adresi</label>
+                            <input type="email" class="form-control" asp-for="Email" placeholder="ornek@mail.com" required />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label fw-bold" asp-for="DrivingLicenseNumber">Ehliyet Numarası</label>
+                            <input type="text" class="form-control" asp-for="DrivingLicenseNumber" required />
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label fw-bold" asp-for="DrivingLicenseDate">Ehliyet Veriliş Tarihi</label>
+                            <input type="date" class="form-control" asp-for="DrivingLicenseDate" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-top text-end">
+                <a asp-area="Admin" asp-controller="Customer" asp-action="CustomerList" class="btn btn-label-secondary me-2">İptal</a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bx bx-save me-1"></i> Müşteriyi Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

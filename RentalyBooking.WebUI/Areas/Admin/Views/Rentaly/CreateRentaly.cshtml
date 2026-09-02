@@ -1,0 +1,165 @@
+﻿@model RentalyBooking.EntityLayer.Entities.Rentaly
+
+<div class="card mb-4 shadow-sm border-0">
+    <div class="card-header border-bottom">
+        <h5 class="mb-0 text-primary"><i class="bx bx-key me-2"></i>Yeni Kiralama Oluştur</h5>
+    </div>
+
+    <div class="card-body mt-4">
+        <form asp-area="Admin" asp-controller="Rentaly" asp-action="CreateRentaly" method="post">
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h6 class="text-muted fw-bold border-bottom pb-2 mb-3">Temel Seçimler</h6>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" asp-for="CustomerId">Müşteri Seçimi</label>
+                        <select class="form-select form-select-lg" asp-for="CustomerId" asp-items="@ViewBag.Customers" required>
+                            <option value="">-- Müşteri Seçiniz --</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" asp-for="CarId">Araç Seçimi</label>
+                        <select class="form-select form-select-lg" asp-for="CarId" asp-items="@ViewBag.Cars" required>
+                            <option value="">-- Araç Seçiniz --</option>
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label fw-bold text-success" asp-for="PickupBranchId"><i class="bx bx-up-arrow-circle"></i> Alış Şubesi</label>
+                            <select class="form-select" asp-for="PickupBranchId" asp-items="@ViewBag.Branches" required>
+                                <option value="">Şube Seçiniz</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label fw-bold text-danger" asp-for="ReturnBranchId"><i class="bx bx-down-arrow-circle"></i> Dönüş Şubesi</label>
+                            <select class="form-select" asp-for="ReturnBranchId" asp-items="@ViewBag.Branches" required>
+                                <option value="">Şube Seçiniz</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="text-muted fw-bold border-bottom pb-2 mb-3">Tarih & Fiyatlandırma</h6>
+                    <div class="d-flex justify-content-between">
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label fw-bold">Alış Tarihi</label>
+                            <div class="input-group">
+                                <input type="text" id="pickupDate" class="form-control" asp-for="PickupDate" placeholder="Tarih Seçiniz" required />
+                                <span class="input-group-text" onclick="document.getElementById('pickupDate')._flatpickr.open()" style="cursor:pointer;">
+                                    <i class="bx bx-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label fw-bold">Dönüş Tarihi</label>
+                            <div class="input-group">
+                                <input type="text" id="returnDate" class="form-control" asp-for="ReturnDate" placeholder="Tarih Seçiniz" required />
+                                <span class="input-group-text" onclick="document.getElementById('returnDate')._flatpickr.open()" style="cursor:pointer;">
+                                    <i class="bx bx-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" asp-for="TotalPrice">Toplam Kiralama Bedeli (₺)</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text"><i class="bx bx-lira"></i></span>
+                            <input type="number" step="0.01" class="form-control form-control-lg text-primary fw-bold" asp-for="TotalPrice" placeholder="0.00" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" asp-for="Status">Rezervasyon Durumu</label>
+                        <select class="form-select" asp-for="Status" required>
+                            <option value="Onay Bekliyor" selected>Onay Bekliyor (Yeni Talep)</option>
+                            <option value="Onaylandı">Onaylandı (Teslim Bekleniyor)</option>
+                            <option value="Aktif">Aktif Sürüş (Araç Müşteride)</option>
+                            <option value="Tamamlandı">Tamamlandı (Araç İade Edildi)</option>
+                            <option value="İptal">İptal Edildi</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-top text-end">
+                <a asp-area="Admin" asp-controller="Rentaly" asp-action="RentalyList" class="btn btn-label-secondary me-2">İptal</a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bx bx-save me-1"></i> Rezervasyonu Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let pickupPicker, returnPicker;
+
+        document.getElementById('CarId').addEventListener('change', function () {
+            var carId = this.value;
+
+            // Önceki picker'ları temizle
+            if (pickupPicker) pickupPicker.destroy();
+            if (returnPicker) returnPicker.destroy();
+
+            // Input değerlerini sıfırla
+            document.getElementById('pickupDate').value = '';
+            document.getElementById('returnDate').value = '';
+
+            if (!carId) return;
+
+            fetch('/Admin/Car/GetDisabledDates?carId=' + carId)
+                .then(res => res.json())
+                .then(data => {
+                    console.log("Gelen data:", data);
+
+                    // Hata dönmüşse göster
+        if (data.error) {
+            console.error("Sunucu hatası:", data.error, data.inner);
+            return;
+        }
+                    // Flatpickr disable array'i için range formatına çevir
+                    const disabledRanges = data.map(d => ({
+                        from: d.from,
+                        to: d.to
+                    }));
+
+                    // Alış tarihi takvimi
+                    pickupPicker = flatpickr("#pickupDate", {
+                        dateFormat: "Y-m-d",
+                        minDate: "today",
+                        disable: disabledRanges,
+                        locale: "tr",
+                        allowInput: true,
+                        onChange: function (selectedDates) {
+                            if (selectedDates.length > 0) {
+                                // Alış seçilince dönüş tarihini sıfırla ve minDate'i güncelle
+                                returnPicker.setDate(null);
+                                returnPicker.set('minDate', selectedDates[0]);
+                                returnPicker.open();
+                            }
+                        }
+                    });
+
+                    // Dönüş tarihi takvimi
+                    returnPicker = flatpickr("#returnDate", {
+                        dateFormat: "Y-m-d",
+                        minDate: "today",
+                        disable: disabledRanges,
+                        locale: "tr",
+                        allowInput: true
+                    });
+                })
+                .catch(err => {
+                    console.error("Tarihler alınamadı:", err);
+                    alert("Araç müsaitlik bilgileri yüklenirken hata oluştu.");
+                });
+        });
+    });
+</script>

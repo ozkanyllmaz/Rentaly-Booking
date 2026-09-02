@@ -1,0 +1,131 @@
+﻿@model RentalyBooking.EntityLayer.Entities.Car
+
+<div class="row justify-content-center">
+    <div class="col-md-12 col-lg-10">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Araç Bilgilerini Güncelle</h5>
+            </div>
+            <hr class="m-0" />
+
+            <div class="card-body mt-3">
+                <form asp-area="Admin" asp-controller="Car" asp-action="UpdateCar" method="post">
+
+                    <input type="hidden" asp-for="CarId" />
+
+                    <h6 class="text-primary mb-3">Temel Bilgiler</h6>
+                    <div class="row">
+                        <div class="col-md-3 mb-4">
+                            <label class="form-label fw-bold" asp-for="PlateNumber">Plaka</label>
+                            <input type="text" class="form-control" asp-for="PlateNumber" required />
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <label class="form-label fw-bold" asp-for="VIN">Şasi No (VIN)</label>
+                            <input type="text" class="form-control" asp-for="VIN" required />
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <label class="form-label fw-bold" asp-for="BrandId">Marka</label>
+                            <select class="form-select" asp-for="BrandId" asp-items="@ViewBag.Brands" required>
+                                <option value="">Seçiniz</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <label class="form-label fw-bold" asp-for="CarModelId">Model</label>
+                            <select class="form-select" asp-for="CarModelId" asp-items="@ViewBag.Models" required>
+                                <option value="">Seçiniz</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label fw-bold" asp-for="CategoryId">Kategori</label>
+                            <select class="form-select" asp-for="CategoryId" asp-items="@ViewBag.Categories" required>
+                                <option value="">Seçiniz</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label fw-bold" asp-for="BranchId">Bulunduğu Şube</label>
+                            <select class="form-select" asp-for="BranchId" asp-items="@ViewBag.Branches" required>
+                                <option value="">Seçiniz</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr class="my-4" />
+
+                    <h6 class="text-primary mb-3">Teknik Özellikler</h6>
+                    <div class="row">
+                        <div class="col-md-2 mb-4">
+                            <label class="form-label fw-bold" asp-for="Year">Yıl</label>
+                            <input type="number" class="form-control" asp-for="Year" required />
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <label class="form-label fw-bold" asp-for="Kilometer">Kilometre</label>
+                            <input type="number" class="form-control" asp-for="Kilometer" required />
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <label class="form-label fw-bold" asp-for="FuelType">Yakıt Türü</label>
+                            <select class="form-select" asp-for="FuelType" required>
+                                <option value="Benzin">Benzin</option>
+                                <option value="Dizel">Dizel</option>
+                                <option value="Elektrik">Elektrik</option>
+                                <option value="Hibrit">Hibrit</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-4">
+                            <label class="form-label fw-bold" asp-for="SeatCount">Koltuk</label>
+                            <input type="number" class="form-control" asp-for="SeatCount" required />
+                        </div>
+                        <div class="col-md-2 mb-4">
+                            <label class="form-label fw-bold" asp-for="LuggageCount">Bagaj</label>
+                            <input type="number" class="form-control" asp-for="LuggageCount" required />
+                        </div>
+                    </div>
+
+                    <hr class="my-4" />
+
+                    <h6 class="text-primary mb-3">Fiyatlandırma ve Durum</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label fw-bold" asp-for="DailyPrice">Günlük Fiyat (₺)</label>
+                            <input type="number" step="0.01" class="form-control" asp-for="DailyPrice" required />
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label fw-bold" asp-for="DepositAmount">Depozito Ücreti (₺)</label>
+                            <input type="number" step="0.01" class="form-control" asp-for="DepositAmount" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold" asp-for="ImageUrl">Araç Görsel URL</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text"><i class="bx bx-image"></i></span>
+                            <input type="text" class="form-control" asp-for="ImageUrl" required />
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-4 mb-4">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" asp-for="IsAvailable">
+                            <label class="form-check-label fw-bold" asp-for="IsAvailable">Müsait mi?</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" asp-for="IsActive">
+                            <label class="form-check-label fw-bold" asp-for="IsActive">Sistemde Aktif mi?</label>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 text-end">
+                        <a asp-area="Admin" asp-controller="Car" asp-action="CarList" class="btn btn-outline-secondary me-2">
+                            <i class="bx bx-arrow-back me-1"></i> İptal
+                        </a>
+                        <button type="submit" class="btn btn-info">
+                            <i class="bx bx-sync me-1"></i> Değişiklikleri Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

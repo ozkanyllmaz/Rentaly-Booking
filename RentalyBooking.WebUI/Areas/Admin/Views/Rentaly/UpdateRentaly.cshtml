@@ -1,0 +1,82 @@
+﻿@model RentalyBooking.EntityLayer.Entities.Rentaly
+
+<div class="card mb-4 shadow-sm border-0">
+    <div class="card-header border-bottom">
+        <h5 class="mb-0 text-warning"><i class="bx bx-edit-alt me-2"></i>Kiralama Bilgilerini Güncelle</h5>
+    </div>
+    
+    <div class="card-body mt-4">
+        <form asp-area="Admin" asp-controller="Rentaly" asp-action="UpdateRentaly" method="post">
+            
+            <input type="hidden" asp-for="RentalyId" />
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h6 class="text-muted fw-bold border-bottom pb-2 mb-3">Temel Seçimler</h6>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" asp-for="CustomerId">Müşteri</label>
+                        <select class="form-select" asp-for="CustomerId" asp-items="@ViewBag.Customers" required></select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" asp-for="CarId">Araç</label>
+                        <select class="form-select" asp-for="CarId" asp-items="@ViewBag.Cars" required></select>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label fw-bold text-success" asp-for="PickupBranchId"><i class="bx bx-up-arrow-circle"></i> Alış Şubesi</label>
+                            <select class="form-select" asp-for="PickupBranchId" asp-items="@ViewBag.Branches" required></select>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label fw-bold text-danger" asp-for="ReturnBranchId"><i class="bx bx-down-arrow-circle"></i> Dönüş Şubesi</label>
+                            <select class="form-select" asp-for="ReturnBranchId" asp-items="@ViewBag.Branches" required></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="text-muted fw-bold border-bottom pb-2 mb-3">Tarih & Fiyatlandırma</h6>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label fw-bold" asp-for="PickupDate">Alış Tarihi</label>
+                            <input type="date" class="form-control" asp-for="PickupDate" asp-format="{0:yyyy-MM-dd}" required />
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label fw-bold" asp-for="ReturnDate">Dönüş Tarihi</label>
+                            <input type="date" class="form-control" asp-for="ReturnDate" asp-format="{0:yyyy-MM-dd}" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" asp-for="TotalPrice">Toplam Tutar (₺)</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text"><i class="bx bx-lira"></i></span>
+                            <input type="number" step="0.01" class="form-control fw-bold" asp-for="TotalPrice" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" asp-for="Status">Durum</label>
+                        <select class="form-select" asp-for="Status" required>
+                            <option value="Onay Bekliyor">Onay Bekliyor</option>
+                            <option value="Onaylandı">Onaylandı</option>
+                            <option value="Aktif">Aktif Sürüş</option>
+                            <option value="Tamamlandı">Tamamlandı</option>
+                            <option value="İptal">İptal Edildi</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-top text-end">
+                <a asp-area="Admin" asp-controller="Rentaly" asp-action="RentalyList" class="btn btn-label-secondary me-2">İptal</a>
+                <button type="submit" class="btn btn-warning">
+                    <i class="bx bx-sync me-1"></i> Değişiklikleri Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

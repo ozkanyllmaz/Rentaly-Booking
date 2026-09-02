@@ -1,0 +1,295 @@
+﻿@model List<RentalyBooking.EntityLayer.Entities.Car>
+
+<style>
+    /* KARTIN KENDİSİ VE GÖLGESİ */
+    .vehicle-card {
+        background: #fff;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.125rem 0.25rem rgba(161, 172, 184, 0.2);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .vehicle-card:hover {
+            box-shadow: 0 0.5rem 1rem rgba(161, 172, 184, 0.25);
+            transform: translateY(-5px);
+        }
+
+    /* RESİM ALANI VE ETİKETLER */
+    .vehicle-img-wrap {
+        position: relative;
+        height: 220px;
+        width: 100%;
+        overflow: hidden;
+        background-color: #f1f1f2;
+    }
+
+        .vehicle-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Resmin sündürülmeden kutuyu kaplamasını sağlar */
+        }
+
+    .vehicle-status, .vehicle-fuel {
+        position: absolute;
+        top: 10px;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #fff;
+        z-index: 2;
+    }
+
+    .vehicle-status {
+        right: 10px;
+    }
+
+    .vehicle-fuel {
+        left: 10px;
+        background: rgba(34, 48, 62, 0.7);
+        backdrop-filter: blur(4px);
+    }
+
+    .status-available {
+        background: rgba(113, 221, 55, 0.9);
+    }
+
+    .status-rented {
+        background: rgba(255, 62, 29, 0.9);
+    }
+
+    /* ORTA BÖLÜM: YAZILAR VE ÖZELLİKLER */
+    .vehicle-body {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .vehicle-brand {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: #a1acb8;
+        letter-spacing: 1px;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    .vehicle-name {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #566a7f;
+        margin-bottom: 1.25rem;
+    }
+
+    .vehicle-specs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .spec-item {
+        display: flex;
+        align-items: center;
+        color: #697a8d;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+        .spec-item i {
+            color: #696cff; /* Temanın ana mavi rengi */
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+    /* FİYAT BÖLÜMÜ */
+    .vehicle-price-row {
+        margin-top: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #eceef1;
+        padding-top: 1rem;
+    }
+
+    .price-amount {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #566a7f;
+    }
+
+    .price-label {
+        font-size: 0.75rem;
+        color: #a1acb8;
+    }
+
+    .vehicle-year-badge {
+        background: #e7e7ff;
+        color: #696cff;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.375rem;
+        font-weight: 600;
+        font-size: 0.8rem;
+    }
+
+    /* ALT BUTONLAR (DETAY, DÜZENLE, SİL) */
+    .vehicle-actions {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0 1.5rem 1.5rem;
+    }
+
+    .btn-action {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .btn-detail {
+        background: #e7e7ff;
+        color: #696cff;
+    }
+
+        .btn-detail:hover {
+            background: #696cff;
+            color: #fff;
+        }
+
+    .btn-edit {
+        background: #fff2d6;
+        color: #ffab00;
+    }
+
+        .btn-edit:hover {
+            background: #ffab00;
+            color: #fff;
+        }
+
+    .btn-delete {
+        background: #ffe0db;
+        color: #ff3e1d;
+    }
+
+        .btn-delete:hover {
+            background: #ff3e1d;
+            color: #fff;
+        }
+</style>
+
+<div class="card mb-4 shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Araç Listesi</h5>
+        <a asp-area="Admin" asp-controller="Car" asp-action="CreateCar" class="btn btn-primary">
+            <i class="bx bx-plus me-1"></i> Yeni Araç Ekle
+        </a>
+    </div>
+</div>
+
+@if (Model.Count == 0)
+{
+    <div class="card mb-4 shadow-sm text-center" style="padding: 5rem 2rem;">
+        <div class="card-body">
+            <div class="mb-4">
+                <i class="bx bx-car text-muted" style="font-size: 5rem; opacity: 0.5;"></i>
+            </div>
+            <h4 class="fw-bold text-secondary mb-2">Henüz Araç Bulunmuyor</h4>
+            <p class="text-muted mb-4" style="font-size: 1.1rem;">
+                Bu şubeye (veya listeye) ait sistemde kayıtlı herhangi bir araç bulunamadı.<br />
+                Araç ekleyerek filonuzu yönetmeye başlayabilirsiniz.
+            </p>
+            <a href="/Admin/Car/CreateCar" class="btn btn-primary btn-lg px-4">
+                <i class="bx bx-plus me-1"></i> Hemen Araç Ekle
+            </a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row g-4" id="vehicleGrid">
+        @foreach (var item in Model)
+        {
+            <div class="col-12 col-sm-6 col-xl-4 vehicle-col">
+                <div class="vehicle-card" data-id="@item.CarId">
+
+                    <div class="vehicle-img-wrap">
+                        <img src="@item.ImageUrl" alt="@item.PlateNumber" loading="lazy" onerror="this.src='https://placehold.co/600x340/e2e8f0/94a3b8?text=Görsel+Yok'">
+
+                        @if (item.IsAvailable)
+                        {
+                            <span class="vehicle-status status-available">
+                                <i class="bx bx-check-circle me-1"></i> Müsait
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="vehicle-status status-rented">
+                                <i class="bx bx-x-circle me-1"></i> Kirada
+                            </span>
+                        }
+
+                        <span class="vehicle-fuel">
+                            <i class="bx bx-gas-pump"></i> @item.FuelType
+                        </span>
+                    </div>
+
+                    <div class="vehicle-body">
+                        <div class="vehicle-brand">@(item.Brand != null ? item.Brand.BrandName : "Marka Tanımsız")</div>
+                        <div class="vehicle-name">Plaka: @item.PlateNumber</div>
+
+                        <div class="vehicle-specs">
+                            <div class="spec-item">
+                                <i class="bx bx-tachometer"></i>
+                                <span>@item.Kilometer.ToString("N0") km</span>
+                            </div>
+                            <div class="spec-item">
+                                <i class="bx bx-group"></i>
+                                <span>@item.SeatCount Koltuk</span>
+                            </div>
+                            <div class="spec-item">
+                                <i class="bx bx-briefcase"></i>
+                                <span>@item.LuggageCount Bagaj</span>
+                            </div>
+                            <div class="spec-item">
+                                <i class="bx bx-calendar"></i>
+                                <span>@item.Year</span>
+                            </div>
+                        </div>
+
+                        <div class="vehicle-price-row">
+                            <div class="vehicle-price">
+                                <span class="price-amount">₺@item.DailyPrice.ToString("N0")</span>
+                                <span class="price-label">/ günlük</span>
+                            </div>
+                            <span class="vehicle-year-badge">@item.Year</span>
+                        </div>
+                    </div>
+
+                    <div class="vehicle-actions">
+                        <a href="/Admin/Car/CarDetail/@item.CarId" class="btn-action btn-detail" title="Detay">
+                            <i class="bx bx-show"></i> Detay
+                        </a>
+                        <a href="/Admin/Car/UpdateCar/@item.CarId" class="btn-action btn-edit" title="Düzenle">
+                            <i class="bx bx-edit-alt"></i> Düzenle
+                        </a>
+                        <a href="/Admin/Car/DeleteCar/@item.CarId" class="btn-action btn-delete" title="Sil">
+                            <i class="bx bx-trash"></i> Sil
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+}

@@ -1,0 +1,185 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <title>@ViewData["Title"] - Rentaly</title>
+    <link rel="icon" href="~/rentaly-ui/Rentaly HTML/images/icon.png" type="image/gif" sizes="16x16">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Rentaly - Multipurpose Vehicle Car Rental Website" name="description">
+    <meta content="" name="keywords">
+    <meta content="" name="author">
+
+    <link href="~/rentaly-ui/Rentaly HTML/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap">
+    <link href="~/rentaly-ui/Rentaly HTML/css/mdb.min.css" rel="stylesheet" type="text/css" id="mdb">
+    <link href="~/rentaly-ui/Rentaly HTML/css/plugins.css" rel="stylesheet" type="text/css">
+    <link href="~/rentaly-ui/Rentaly HTML/css/style.css" rel="stylesheet" type="text/css">
+    <link href="~/rentaly-ui/Rentaly HTML/css/coloring.css" rel="stylesheet" type="text/css">
+
+    <link id="colors" href="~/rentaly-ui/Rentaly HTML/css/colors/scheme-01.css" rel="stylesheet" type="text/css">
+</head>
+
+<body onload="initialize()">
+    <div id="wrapper">
+
+        <div id="de-preloader"></div>
+        <header class="transparent scroll-light has-topbar">
+            <div id="topbar" class="topbar-dark text-light">
+                <div class="container">
+                    <div class="topbar-left xs-hide">
+                        <div class="topbar-widget">
+                            <div class="topbar-widget"><a href="#"><i class="fa fa-phone"></i>+90 555 123 45 67</a></div>
+                            <div class="topbar-widget"><a href="#"><i class="fa fa-envelope"></i>contact@rentaly.com</a></div>
+                            <div class="topbar-widget"><a href="#"><i class="fa fa-clock-o"></i>Pzt - Cum 08.00 - 18.00</a></div>
+                        </div>
+                    </div>
+
+                    <div class="topbar-right">
+                        <div class="social-icons">
+                            <a href="#"><i class="fa fa-facebook fa-lg"></i></a>
+                            <a href="#"><i class="fa fa-twitter fa-lg"></i></a>
+                            <a href="#"><i class="fa fa-youtube fa-lg"></i></a>
+                            <a href="#"><i class="fa fa-pinterest fa-lg"></i></a>
+                            <a href="#"><i class="fa fa-instagram fa-lg"></i></a>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="de-flex sm-pt10">
+                            <div class="de-flex-col">
+                                <div class="de-flex-col">
+                                    <div id="logo">
+                                        <a asp-controller="Home" asp-action="Index">
+                                            <img class="logo-1" src="~/rentaly-ui/Rentaly HTML/images/logo-light.png" alt="">
+                                            <img class="logo-2" src="~/rentaly-ui/Rentaly HTML/images/logo.png" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="de-flex-col header-col-mid">
+                                <ul id="mainmenu">
+                                    <li><a class="menu-item" asp-controller="Home" asp-action="Index">Ana Sayfa</a></li>
+                                    <li><a class="menu-item" asp-controller="Car" asp-action="ListAllCars">Araçlar</a></li>
+                                    <li><a class="menu-item" asp-controller="Booking" asp-action="Index">Rezervasyon</a></li>
+                                    <li><a class="menu-item" asp-controller="About" asp-action="Index">Hakkımızda</a></li>
+                                    <li><a class="menu-item" asp-controller="Contact" asp-action="Index">İletişim</a></li>
+                                </ul>
+                            </div>
+                            <div class="de-flex-col">
+                                <div class="menu_side_area">
+                                    <a href="/" class="btn-main">Araç Kirala</a>
+                                    <span id="menu-btn"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="no-bottom no-top" id="content">
+            <div id="top"></div>
+
+            @RenderBody()
+
+        </div>
+        <a href="#" id="back-to-top"></a>
+
+        <footer class="text-light">
+            <div class="container">
+                <div class="row g-custom-x">
+                    <div class="col-lg-3">
+                        <div class="widget">
+                            <h5>Rentaly Hakkında</h5>
+                            <p>Kalitenin en minimum maliyetle buluştuğu yer. Kaliteden ödün vermeden, bütçenizi zorlamayacak kusursuz bir kiralama deneyimi sunmak için her detayı titizlikle planlıyoruz.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="widget">
+                            <h5>İletişim Bilgileri</h5>
+                            <address class="s1">
+                                <span>
+                                    <i class="id-color fa fa-map-marker fa-lg"></i>Amine Çiçek
+                                    Gün Sokak
+                                    B
+                                    Kartal
+                                    İstanbul
+                                    34880
+                                    Turkey
+                                </span>
+                                <span><i class="id-color fa fa-phone fa-lg"></i>+90 555 123 45 67</span>
+                                <span><i class="id-color fa fa-envelope-o fa-lg"></i><a href="mailto:contact@rentaly.com">contact@rentaly.com</a></span>
+                            </address>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <h5>Hızlı Linkler</h5>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="widget">
+                                    <ul>
+                                        <li><a href="#">Hakkımızda</a></li>
+                                        <li><a href="#">Blog</a></li>
+                                        <li><a href="#">Kariyer</a></li>
+                                        <li><a href="#">Haberler</a></li>
+                                        <li><a href="#">Ortaklarımız</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="widget">
+                            <h5>Sosyal Medya</h5>
+                            <div class="social-icons">
+                                <a href="#"><i class="fa fa-facebook fa-lg"></i></a>
+                                <a href="#"><i class="fa fa-twitter fa-lg"></i></a>
+                                <a href="#"><i class="fa fa-linkedin fa-lg"></i></a>
+                                <a href="#"><i class="fa fa-pinterest fa-lg"></i></a>
+                                <a href="#"><i class="fa fa-rss fa-lg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="subfooter">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="de-flex">
+                                <div class="de-flex-col">
+                                    <a href="#">
+                                        Copyright @DateTime.Now.Year - Rentaly
+                                    </a>
+                                </div>
+                                <ul class="menu-simple">
+                                    <li><a href="#">Şartlar &amp; Koşullar</a></li>
+                                    <li><a href="#">Gizlilik Politikası</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/rentaly-ui/Rentaly HTML/js/plugins.js"></script>
+    <script src="~/rentaly-ui/Rentaly HTML/js/designesia.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=insert_your_api_key_here&amp;libraries=places&amp;callback=initPlaces" async="" defer=""></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>
