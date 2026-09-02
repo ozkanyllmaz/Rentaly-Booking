@@ -23,11 +23,13 @@ Kullanıcı arayüzünde (UI), modern web standartlarına uygun ve mobil uyumlu 
 
   <br><br>
   <img src="https://github.com/user-attachments/assets/9a47e84c-0cbf-451d-8464-bf74f2159d49" width="48%">
-  <img src="https://github.com/user-attachments/assets/529322e7-09bd-483f-a4f9-0af75debea30" width="48%">
+  <img src="https://github.com/user-attachments/assets/5fe32e61-2270-48c6-b739-6fb25843edc8" width="48%">
+  
   
   <br><br>
+  <img src="https://github.com/user-attachments/assets/529322e7-09bd-483f-a4f9-0af75debea30" width="48%">
   <img src="https://github.com/user-attachments/assets/849a834a-1c8b-4dbb-a8df-67b086af7742" width="48%">
-  <img src="https://github.com/user-attachments/assets/5fe32e61-2270-48c6-b739-6fb25843edc8" width="48%">
+  
   
   <br><br>
   <img src="https://github.com/user-attachments/assets/c62a55f0-72b8-410a-801d-55bd80c5d6c1" width="48%">
