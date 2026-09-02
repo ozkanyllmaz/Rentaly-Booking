@@ -8,13 +8,15 @@ Kullanıcı arayüzünde (UI), modern web standartlarına uygun ve mobil uyumlu 
 
 ## 📸 Ekran Görüntüleri
 <div align="center">
+  <img src="https://github.com/user-attachments/assets/d761eca9-1351-46bf-9f2f-a5f08b4d6113" width="48%">
+
+  <br><br>
   <img src="https://github.com/user-attachments/assets/dd28ee5f-cf06-4fc6-a707-ad49df2cd628" width="48%">
   <img src="https://github.com/user-attachments/assets/625d4510-771f-402c-88ef-0de926a07bd1" width="48%">
+
   <br><br>
   <img src="https://github.com/user-attachments/assets/fa8f824f-99ae-42b6-996e-12dbf472f202" width="48%">
   <img src="https://github.com/user-attachments/assets/9a47e84c-0cbf-451d-8464-bf74f2159d49" width="48%">
-  <br><br>
-  <img src="https://github.com/user-attachments/assets/d761eca9-1351-46bf-9f2f-a5f08b4d6113" width="48%">
   
   <br><br>
   <img src="https://github.com/user-attachments/assets/529322e7-09bd-483f-a4f9-0af75debea30" width="48%">
